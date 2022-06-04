@@ -1,0 +1,42 @@
+@use 'color';
+@font-face {
+  font-family: 'Nunito';
+  src: url('../../fonts/Nunito-Light.ttf');
+  font-weight: 300;
+}
+@font-face {
+  font-family: 'Nunito';
+  src: url('../../fonts/Nunito-Regular.ttf');
+  font-weight: 400;
+}
+@font-face {
+  font-family: 'Nunito';
+  src: url('../../fonts/Nunito-SemiBold.ttf');
+  font-weight: 600;
+}
+* {
+  scroll-behavior: smooth;
+  box-sizing: border-box;
+}
+
+html {
+  font-family: 'Nunito', sans-serif;
+}
+body {
+  background: color.$gray-50;
+  overflow: hidden;
+  width: 100vw;
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  align-items: center;
+  padding-top: 32px;
+  padding-left: 28px;
+  padding-right: 28px;
+}
+main,
+header,
+footer {
+  width: 100%;
+  max-width: 640px;
+}
