@@ -1,2 +1,3 @@
-console.log('Hello World')
+import searchInputFocusHandler from "./searchInputFocusHandler.js"
+searchInputFocusHandler()
 export {}

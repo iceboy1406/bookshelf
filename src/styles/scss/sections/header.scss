@@ -1,0 +1,30 @@
+header {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 32px;
+  .actions {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    .form {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      @media screen and (min-width: 640px) {
+        flex-direction: row;
+      }
+      .search-input-container {
+        flex-grow: 1;
+      }
+      button {
+        width: 100%;
+        @media screen and (min-width: 640px) {
+          width: fit-content;
+          order: 2;
+        }
+      }
+    }
+  }
+}
