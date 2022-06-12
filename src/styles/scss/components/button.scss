@@ -1,23 +1,80 @@
 @use '../color.scss';
-.btn {
+.button {
   text-align: center;
-  width: fit-content;
   padding: 12px 20px;
   border-radius: 4px;
   font-size: 14px;
-  transition: all  .3s ease;
   @media screen and (min-width: 500px) {
     font-size: 16px;
   }
 }
-.btn-primary {
-  background-color: color.$indigo-500;
-  color: color.$white;
-  box-shadow: 0px 2px 10px rgba(color.$indigo-500, 1);
-  &:hover {
-    background-color: darken(color.$indigo-500, 2.5%);
+.icon-button {
+  padding: 12px;
+  border-radius: 4px;
+  svg {
+    display: block;
+    width: 16px;
+    height: 16px;
+    @media screen and (min-width:500px) {
+      width: 18px;
+      height: 18px;
+      
+    }
   }
-  &:active {
-    box-shadow: none;
+}
+$button-themes: (
+  primary: color.$indigo-500,
+  success: color.$emerald-500,
+  danger: color.$red-500,
+  secondary: color.$gray-500
+);
+@each $key, $value in $button-themes {
+  .button-#{$key} {
+    background-color: $value;
+    color: color.$white;
+    box-shadow: 0px 2px 5px rgba($value, 0.85);
+    &:hover {
+      background-color: darken($value, 2.5%);
+      box-shadow: 0px 2px 20px rgba($value, 0.85);
+    }
+    &:active {
+      box-shadow: none;
+    }
   }
- }
+}
+// .button-primary {
+//   background-color: color.$indigo-500;
+//   color: color.$white;
+//   box-shadow: 0px 2px 5px rgba(color.$indigo-500, 0.85);
+//   &:hover {
+//     background-color: darken(color.$indigo-500, 2.5%);
+//     box-shadow: 0px 2px 20px rgba(color.$indigo-500, 0.85);
+//   }
+//   &:active {
+//     box-shadow: none;
+//   }
+// }
+// .button-danger {
+//   background-color: color.$red-500;
+//   color: color.$white;
+//   box-shadow: 0px 2px 5px rgba(color.$red-500, 0.85);
+//   &:hover {
+//     background-color: darken(color.$red-500, 2.5%);
+//     box-shadow: 0px 2px 20px rgba(color.$red-500, 0.85);
+//   }
+//   &:active {
+//     box-shadow: none;
+//   }
+// }
+// .button-success {
+//   background-color: color.$emerald-500;
+//   color: color.$white;
+//   box-shadow: 0px 2px 5px rgba(color.$emerald-500, 0.85);
+//   &:hover {
+//     background-color: darken(color.$emerald-500, 2.5%);
+//     box-shadow: 0px 2px 20px rgba(color.$emerald-500, 0.85);
+//   }
+//   &:active {
+//     box-shadow: none;
+//   }
+// }

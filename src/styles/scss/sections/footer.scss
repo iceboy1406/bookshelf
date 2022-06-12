@@ -1,0 +1,8 @@
+@use "../color.scss";
+@use "../typography.scss";
+footer {
+    text-align: center;
+    padding-top: 16px;
+    padding-bottom: 16px;
+    @include typography.body_text;
+}

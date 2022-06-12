@@ -1,0 +1,55 @@
+@use "../color.scss";
+@use "../typography.scss";
+#modal-container {
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(color.$black, .5);
+    position: fixed;
+    top: 0px;
+    left: 0px;
+    padding: 28px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    &.hidden {
+        display: none;
+    }
+    .modal {
+        background-color: color.$gray-50;
+        width: 100%;
+        padding: 24px;
+        border-radius: 8px;
+        max-width: 400px;
+        animation-name: slide-down;
+        animation-duration: .3s;
+        animation-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+        .title {
+            @include typography.heading_text;
+        }
+        .confirmation-message {
+            @include typography.body_text_medium;
+        }
+        &.add-book, &.edit-book {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            form {
+                display: flex;
+                flex-direction: column;
+                gap: 8px;
+                button {
+                    width: 100%;
+                }
+            }
+        }
+    }
+}
+
+@keyframes slide-down {
+    0% {
+        transform: scale(0.85) translateY(-300px);
+    }
+    100% {
+        transform: scale(1) translateY(0px);
+    }
+}

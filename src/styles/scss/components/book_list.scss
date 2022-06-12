@@ -1,0 +1,49 @@
+@use '../color.scss';
+@use '../typography.scss';
+.book-list {
+  display: grid;
+  grid-template-columns: repeat(1, minmax(0, 1fr));
+  gap: 16px;
+  @media screen and (min-width: 768px) {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  &.no-book {
+    grid-template-columns: repeat(1, minmax(0, 1fr));
+    place-content: center;
+    height: 100%;
+    .message {
+      text-align: center;
+      @include typography.body_text;
+      b {
+        color: darken(color.$gray-700, 10%);
+      }
+    }
+  }
+  .book-list-item {
+    background-color: color.$white;
+    border-radius: 4px;
+    padding: 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    .info {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      .title {
+        @include typography.heading_text;
+      }
+      .author {
+        @include typography.body_text_medium;
+      }
+      .published-year {
+        @include typography.body_text_medium;
+      }
+    }
+    .actions {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+  }
+}

@@ -1,9 +1,13 @@
-@use './reset';
-@use './main';
-@use './typography';
+@use './reset.scss';
+@use './main.scss';
 
-
-@use "components/shelf-selector.scss";
-@use "components/button.scss";
-@use "components/search_input.scss";
-@use "sections/header.scss";
+@use 'components/shelf-selector.scss';
+@use 'components/button.scss';
+@use 'components/search_input.scss';
+@use 'components/alert.scss';
+@use 'components/book_list.scss';
+@use 'components/modal.scss';
+@use 'components/form_input.scss';
+@use 'components/checkbox.scss';
+@use 'sections/header.scss';
+@use 'sections/footer.scss';

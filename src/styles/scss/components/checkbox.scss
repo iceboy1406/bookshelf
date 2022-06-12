@@ -1,0 +1,30 @@
+@use '../color.scss';
+@use '../typography.scss';
+.checkbox-group {
+  display: flex;
+  gap: 6px;
+  align-items: center;
+
+  input[type='checkbox'] {
+    display: none;
+    &:checked ~ .checkbox {
+      background-color: color.$indigo-500;
+      border: 1px solid color.$indigo-500;
+      color: color.$white;
+    }
+  }
+  .checkbox {
+    border: 1px solid rgba(color.$gray-700, 0.35);
+    border-radius: 4px;
+    padding: 2px;
+    color: transparent;
+    svg {
+      display: block;
+      width: 12px;
+      height: 12px;
+    }
+  }
+  .checkbox-label {
+    @include typography.body_text;
+  }
+}

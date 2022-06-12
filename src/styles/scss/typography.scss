@@ -1,1 +1,28 @@
 @use 'color';
+@mixin heading_text {
+  font-weight: 600;
+  font-size: 24px;
+  color: color.$gray-700;
+  line-height: 32px;
+}
+
+@mixin body_text_big {
+  font-weight: 400;
+  font-size: 20px;
+  color: color.$gray-600;
+  line-height: 28px;
+}
+
+@mixin body_text {
+  font-weight: 400;
+  font-size: 16px;
+  color: color.$gray-600;
+  line-height: 22px;
+}
+@mixin body_text_medium {
+  font-weight: 400;
+  font-size: 18px;
+  color: color.$gray-600;
+  line-height: 24px;
+}
+
