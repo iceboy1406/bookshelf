@@ -1,46 +1,47 @@
-@use "../color.scss";
+@use '../color.scss';
+$alert-themes: (
+  success: color.$emerald-500,
+  danger: color.$red-500,
+);
+#alert-container {
+  &.hidden {
+    display: none;
+  }
+}
 .alert {
-    display: flex;
-    justify-content: space-between;
-    width: 100%;
-    gap: 8px;
-    padding: 12px 16px;
-    border-left: 4px solid;
-    border-radius: 4px;
-    &.hidden {
-        display: none;
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  gap: 8px;
+  padding: 12px 16px;
+  border-left: 4px solid;
+  border-radius: 4px;
+
+  .message {
+    font-size: 16px;
+    font-weight: 600;
+    line-height: 24px;
+  }
+  .close-button {
+    display: block;
+    height: fit-content;
+    color: inherit;
+    padding: 4px;
+    border-radius: 50%;
+    svg {
+      width: 16px;
+      height: 16px;
+      display: block;
     }
-    .message {
-        font-size: 16px;
-        font-weight: 600;
-        line-height: 24px;
+  }
+  @each $key, $value in $alert-themes {
+    &.alert-#{$key} {
+      background-color: rgba($value, 0.15);
+      border-color: $value;
+      color: $value;
+      .close-button {
+        background-color: rgba($value, 0.15);
+      }
     }
-    .close-button {
-        display: block;
-        height: fit-content;
-        color: inherit;
-        padding: 4px;
-        border-radius: 50%;
-        svg {
-            width: 16px;
-            height: 16px;
-            display: block;
-        }
-    }
-    &[data-theme="success"] {
-        background-color: rgba(color.$emerald-500, .15);
-        border-color: color.$emerald-500;
-        color: color.$emerald-500;
-        .close-button {
-            background-color: rgba(color.$emerald-500, .15);
-        }
-    }
-    &[data-theme="danger"] {
-        background-color: rgba(color.$red-500, .15);
-        border-color: color.$red-500;
-        color: color.$red-500;
-        .close-button {
-            background-color: rgba(color.$red-500, .15);
-        }
-    }
+  }
 }

@@ -7,7 +7,7 @@
   label {
     @include typography.body_text;
   }
-  input[type='text'] {
+  input[type='text'], input[type='number'] {
     padding: 8px 16px;
     border-radius: 4px;
     @include typography.body_text;

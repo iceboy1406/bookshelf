@@ -1,165 +1,89 @@
 class BookStore {
     static getAll() {
-        return new Promise((resolve, reject) => {
-            try {
-                const currentBooks = localStorage.getItem('books');
-                const books = currentBooks == null ? [] : JSON.parse(currentBooks);
-                resolve(books);
-            }
-            catch (error) {
-                if (error instanceof Error)
-                    reject(error.message);
-            }
-        });
+        const currentBooks = localStorage.getItem('books');
+        return currentBooks == null ? [] : JSON.parse(currentBooks);
     }
-    static getOne(id) {
-        return new Promise(async (resolve, reject) => {
-            try {
-                const books = await this.getAll();
-                const index = books.findIndex((value) => value.id === id);
-                if (index === -1)
-                    reject('Buku tidak ditemukan');
-                resolve({ data: books[index], index });
-            }
-            catch (error) {
-                if (error instanceof Error)
-                    reject(error.message);
-            }
-        });
+    static findById(id) {
+        const currentBooks = this.getAll();
+        const index = currentBooks.findIndex((book) => book.id === id);
+        if (index === -1)
+            throw Error('Buku tidak ditemukan');
+        return { data: currentBooks[index], index };
     }
-    static getUnfinishedRead(books) {
-        return new Promise(async (resolve, reject) => {
-            try {
-                const unfinishedBooks = books.filter((value) => value.isComplete === false);
-                resolve(unfinishedBooks);
-            }
-            catch (error) {
-                if (error instanceof Error)
-                    reject(error.message);
-            }
-        });
+    static findByTitle(title) {
+        const currentBooks = this.getAll();
+        const searchedBooks = currentBooks.filter((value) => value.title.match(new RegExp(title.trim(), 'gi')));
+        if (title.trim().length > 0)
+            return searchedBooks;
+        return currentBooks;
     }
-    static getFinishedRead(books) {
-        return new Promise(async (resolve, reject) => {
-            try {
-                const unfinishedBooks = books.filter((value) => value.isComplete === true);
-                resolve(unfinishedBooks);
-            }
-            catch (error) {
-                if (error instanceof Error)
-                    reject(error.message);
-            }
-        });
+    static filterUnfinishedRead(books) {
+        return books.filter((book) => book.isComplete === false);
     }
-    static search(title) {
-        return new Promise(async (resolve, reject) => {
-            try {
-                const allBooks = await this.getAll();
-                const searchRegex = new RegExp(title.trim(), 'gi');
-                const searchedBooks = allBooks.filter((value) => value.title.match(searchRegex));
-                if (title.length > 0) {
-                    resolve(searchedBooks);
-                }
-                else {
-                    resolve(allBooks);
-                }
-            }
-            catch (error) {
-                if (error instanceof Error)
-                    reject(error.message);
-            }
-        });
+    static filterFinishedRead(books) {
+        return books.filter((book) => book.isComplete === true);
     }
     static moveBookToUnfinishedShelf(id) {
-        return new Promise(async (resolve, reject) => {
-            try {
-                const books = await this.getAll();
-                const searchedBook = await this.getOne(id);
-                if (searchedBook.data.isComplete === true) {
-                    reject(`Buku ${searchedBook.data.title} sudah berada di rak belum selesai dibaca`);
-                }
-                else {
-                    searchedBook.data.isComplete = false;
-                    books.splice(searchedBook.index, 1, searchedBook.data);
-                    resolve(`Berhasil memindahkan buku ${searchedBook.data.title} ke rak belum selesai dibaca`);
-                }
-            }
-            catch (error) {
-                if (error instanceof Error)
-                    reject(error.message);
-            }
-        });
+        const currentBooks = this.getAll();
+        const searchedBook = this.findById(id);
+        if (searchedBook.data.isComplete === false) {
+            throw Error(`Buku ${searchedBook.data.title} sudah berada di rak belum selesai dibaca`);
+        }
+        else {
+            searchedBook.data.isComplete = false;
+            currentBooks.splice(searchedBook.index, 1, searchedBook.data);
+            localStorage.setItem('books', JSON.stringify(currentBooks));
+            return `Berhasil memindahkan buku ${searchedBook.data.title} ke rak belum selesai dibaca`;
+        }
     }
     static moveBookToFinishedShelf(id) {
-        return new Promise(async (resolve, reject) => {
-            const books = await this.getAll();
-            const searchedBook = await this.getOne(id);
-            try {
-                if (searchedBook.data.isComplete === false) {
-                    reject(`Buku ${searchedBook.data.title} sudah berada di rak selesai dibaca`);
-                }
-                else {
-                    searchedBook.data.isComplete = true;
-                    books.splice(searchedBook.index, 1, searchedBook.data);
-                    resolve(`Berhasil memindahkan buku ${searchedBook.data.title} ke rak selesai dibaca`);
-                }
-            }
-            catch (error) {
-                if (error instanceof Error)
-                    reject(error.message);
-            }
-        });
+        const currentBooks = this.getAll();
+        const searchedBook = this.findById(id);
+        if (searchedBook.data.isComplete === true) {
+            throw Error(`Buku ${searchedBook.data.title} sudah berada di rak selesai dibaca`);
+        }
+        else {
+            searchedBook.data.isComplete = true;
+            currentBooks.splice(searchedBook.index, 1, searchedBook.data);
+            localStorage.setItem('books', JSON.stringify(currentBooks));
+            return `Berhasil memindahkan buku ${searchedBook.data.title} ke rak selesai dibaca`;
+        }
     }
-    static add(book) {
-        return new Promise(async (resolve, reject) => {
-            try {
-                const books = await this.getAll();
-                if (books.findIndex((value) => value.author === book.author &&
-                    value.title === book.title &&
-                    value.year === book.year) !== -1) {
-                    reject(`Buku ${book.title} karya ${book.author} dan terbit tahun ${book.year} sudah ada di rak. Tidak bisa diduplikat.`);
-                }
-                else {
-                    books.push(book);
-                    localStorage.setItem('books', JSON.stringify(books));
-                    resolve(`Berhasil menambahkan buku ${book.title}`);
-                }
+    static add(newBook) {
+        const currentBooks = this.getAll();
+        if (currentBooks.findIndex((currentBook) => currentBook.author === newBook.author &&
+            currentBook.title === newBook.title &&
+            currentBook.year === newBook.year) !== -1) {
+            throw Error(`Buku ${newBook.title} karya ${newBook.author} dan terbit tahun ${newBook.year} sudah ada di rak. Tidak bisa diduplikat.`);
+        }
+        else {
+            if (isNaN(newBook.year) || newBook.year < 1) {
+                throw Error(`Tahun terbit harus diisi dengan angka dan harus lebih besar dari 0`);
             }
-            catch (error) {
-                if (error instanceof Error)
-                    reject(error.message);
+            else {
+                localStorage.setItem('books', JSON.stringify([...currentBooks, newBook]));
+                return `Berhasil menambahkan buku ${newBook.title}`;
             }
-        });
+        }
     }
     static delete(id) {
-        return new Promise(async (resolve, reject) => {
-            try {
-                const books = await this.getAll();
-                const searchedBook = await this.getOne(id);
-                books.splice(searchedBook.index, 1);
-                localStorage.setItem('books', JSON.stringify(books));
-                resolve(`Berhasil menghapus buku ${searchedBook.data.title} dari rak`);
-            }
-            catch (error) {
-                if (error instanceof Error)
-                    reject(error.message);
-            }
-        });
+        const currentBooks = this.getAll();
+        const searchedBook = this.findById(id);
+        currentBooks.splice(searchedBook.index, 1);
+        localStorage.setItem('books', JSON.stringify(currentBooks));
+        return `Berhasil menghapus buku ${searchedBook.data.title} dari rak`;
     }
     static update(id, newBook) {
-        return new Promise(async (resolve, reject) => {
-            try {
-                const books = await this.getAll();
-                const searchedBook = await this.getOne(id);
-                books.splice(searchedBook.index, 1, newBook);
-                localStorage.setItem('books', JSON.stringify(books));
-                resolve(`Berhasil mengubah data buku ${searchedBook.data.title}`);
-            }
-            catch (error) {
-                if (error instanceof Error)
-                    reject(error.message);
-            }
-        });
+        if (isNaN(newBook.year) || newBook.year < 1) {
+            throw Error(`Tahun terbit harus diisi dengan angka dan harus lebih besar dari 0`);
+        }
+        else {
+            const currentBooks = this.getAll();
+            const searchedBook = this.findById(id);
+            currentBooks.splice(searchedBook.index, 1, newBook);
+            localStorage.setItem('books', JSON.stringify(currentBooks));
+            return `Berhasil mengubah data buku ${searchedBook.data.title}`;
+        }
     }
 }
 export default BookStore;

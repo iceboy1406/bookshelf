@@ -42,6 +42,19 @@
                 }
             }
         }
+        &.delete-confirmation, &.mark-confirmation {
+            display: flex;
+            flex-direction: column;
+            gap: 24px;
+            .message {
+                @include typography.body_text_big;
+            }
+            form {
+                margin-left: auto;
+                display: flex;
+                gap: 8px;
+            }
+        }
     }
 }
 

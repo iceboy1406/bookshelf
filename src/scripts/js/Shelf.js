@@ -6,16 +6,15 @@ class Shelf {
             finishedRead: 'finished-read',
         };
     }
-    static async changeEventHandler() {
+    static changeEventHandler() {
         const shelfSelectors = document.querySelectorAll('[name=shelf-selector]');
         for (const shelfSelector of shelfSelectors) {
-            shelfSelector.addEventListener('change', async () => await Search.renderSearchedBooks());
+            shelfSelector.addEventListener('change', () => Search.renderSearchedBooks());
         }
     }
-    static get selectedShelf() {
+    static get selected() {
         const selectedShelf = document.querySelector('[name=shelf-selector]:checked');
-        if (selectedShelf instanceof HTMLInputElement)
-            return selectedShelf.id;
+        return selectedShelf?.id;
     }
 }
 export default Shelf;

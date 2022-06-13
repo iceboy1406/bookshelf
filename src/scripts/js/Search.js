@@ -1,5 +1,6 @@
 import BookList from './BookList.js';
 import BookStore from './BookStore.js';
+import Shelf from './Shelf.js';
 class Search {
     static searchInput = document.querySelector('#search-input');
     static get value() {
@@ -8,15 +9,34 @@ class Search {
         return '';
     }
     static get searchedBooks() {
-        return (async () => await BookStore.search(this.value))();
+        switch (Shelf.selected) {
+            case Shelf.type.finishedRead:
+                return BookStore.filterFinishedRead(BookStore.findByTitle(this.value));
+            case Shelf.type.unfinishedRead:
+                return BookStore.filterUnfinishedRead(BookStore.findByTitle(this.value));
+        }
     }
-    static async renderSearchedBooks() {
-        BookList.render(await this.searchedBooks, `Buku dengan judul yang mengandung kata <b>${this.value.toLowerCase()}</b> tidak ditemukan`);
+    static renderSearchedBooks() {
+        const allBookOnActiveShelf = (() => {
+            switch (Shelf.selected) {
+                case Shelf.type.finishedRead:
+                    return BookStore.filterFinishedRead(BookStore.getAll());
+                case Shelf.type.unfinishedRead:
+                    return BookStore.filterUnfinishedRead(BookStore.getAll());
+            }
+        })();
+        if (this.searchedBooks && allBookOnActiveShelf) {
+            const noBookMessage = allBookOnActiveShelf.length > 0
+                ? `Buku dengan judul yang mengandung <b>${this.value.toLowerCase()}</b> tidak ditemukan`
+                : `Tidak ada buku di rak ini`;
+            const searchedBooksList = new BookList(this?.searchedBooks, noBookMessage);
+            searchedBooksList.render();
+        }
     }
-    static async inputChangeEventHandler() {
-        this.searchInput?.addEventListener('input', async () => await this.renderSearchedBooks());
+    static inputChangeEventHandler() {
+        this.searchInput?.addEventListener('input', () => this.renderSearchedBooks());
     }
-    static async inputFocusEventHandler() {
+    static inputFocusEventHandler() {
         const searchInputContainer = document.querySelector('.search-input-container');
         if (searchInputContainer instanceof HTMLLabelElement &&
             this.searchInput instanceof HTMLInputElement) {

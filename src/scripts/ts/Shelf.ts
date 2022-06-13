@@ -1,5 +1,3 @@
-import BookList from './BookList.js'
-import BookStore from './BookStore.js'
 import Search from './Search.js'
 
 class Shelf {
@@ -10,22 +8,22 @@ class Shelf {
     }
   }
 
-  static async changeEventHandler() {
+  static changeEventHandler() {
     const shelfSelectors: NodeListOf<HTMLInputElement> =
       document.querySelectorAll('[name=shelf-selector]')
     for (const shelfSelector of shelfSelectors) {
       shelfSelector.addEventListener(
         'change',
-        async () => await Search.renderSearchedBooks()
+        () => Search.renderSearchedBooks()
       )
     }
   }
 
-  static get selectedShelf() {
+  static get selected()  {
     const selectedShelf: HTMLInputElement | null = document.querySelector(
       '[name=shelf-selector]:checked'
     )
-    if (selectedShelf instanceof HTMLInputElement) return selectedShelf.id
+    return selectedShelf?.id
   }
 }
 export default Shelf

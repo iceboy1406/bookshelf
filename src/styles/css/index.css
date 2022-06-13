@@ -8,6 +8,7 @@
 * {
   margin: 0;
   padding: 0;
+  word-break: break-word;
 }
 
 html {
@@ -569,6 +570,10 @@ main::-webkit-scrollbar-thumb:hover {
   cursor: pointer;
 }
 
+#alert-container.hidden {
+  display: none;
+}
+
 .alert {
   display: flex;
   justify-content: space-between;
@@ -577,9 +582,6 @@ main::-webkit-scrollbar-thumb:hover {
   padding: 12px 16px;
   border-left: 4px solid;
   border-radius: 4px;
-}
-.alert.hidden {
-  display: none;
 }
 .alert .message {
   font-size: 16px;
@@ -598,80 +600,83 @@ main::-webkit-scrollbar-thumb:hover {
   height: 16px;
   display: block;
 }
-.alert[data-theme=success] {
+.alert.alert-success {
   background-color: rgba(16, 185, 129, 0.15);
   border-color: #10B981;
   color: #10B981;
 }
-.alert[data-theme=success] .close-button {
+.alert.alert-success .close-button {
   background-color: rgba(16, 185, 129, 0.15);
 }
-.alert[data-theme=danger] {
+.alert.alert-danger {
   background-color: rgba(239, 68, 68, 0.15);
   border-color: #EF4444;
   color: #EF4444;
 }
-.alert[data-theme=danger] .close-button {
+.alert.alert-danger .close-button {
   background-color: rgba(239, 68, 68, 0.15);
 }
 
-.book-list {
-  display: grid;
-  grid-template-columns: repeat(1, minmax(0, 1fr));
+#book-list {
+  column-count: 1;
+  list-style-type: none;
   gap: 16px;
 }
 @media screen and (min-width: 768px) {
-  .book-list {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+  #book-list {
+    column-count: 2;
   }
 }
-.book-list.no-book {
-  grid-template-columns: repeat(1, minmax(0, 1fr));
-  place-content: center;
+#book-list.no-book {
+  display: grid;
+  place-items: center;
   height: 100%;
 }
-.book-list.no-book .message {
+#book-list.no-book .message {
   text-align: center;
   font-weight: 400;
   font-size: 16px;
   color: #4B5563;
   line-height: 22px;
 }
-.book-list.no-book .message b {
+#book-list.no-book .message b {
   color: #222933;
 }
-.book-list .book-list-item {
+#book-list .book-list-item {
   background-color: #ffffff;
   border-radius: 4px;
   padding: 24px;
-  display: flex;
+  display: inline-flex;
   flex-direction: column;
   gap: 16px;
+  height: fit-content;
+  width: 100%;
+  margin-bottom: 16px;
 }
-.book-list .book-list-item .info {
+#book-list .book-list-item .info {
   display: flex;
   flex-direction: column;
   gap: 6px;
 }
-.book-list .book-list-item .info .title {
+#book-list .book-list-item .info .title {
   font-weight: 600;
   font-size: 24px;
   color: #374151;
   line-height: 32px;
 }
-.book-list .book-list-item .info .author {
+#book-list .book-list-item .info .author {
   font-weight: 400;
   font-size: 18px;
   color: #4B5563;
   line-height: 24px;
 }
-.book-list .book-list-item .info .published-year {
+#book-list .book-list-item .info .published-year {
   font-weight: 400;
   font-size: 18px;
   color: #4B5563;
   line-height: 24px;
 }
-.book-list .book-list-item .actions {
+#book-list .book-list-item .actions {
   display: flex;
   gap: 8px;
   flex-wrap: wrap;
@@ -727,6 +732,22 @@ main::-webkit-scrollbar-thumb:hover {
 #modal-container .modal.add-book form button, #modal-container .modal.edit-book form button {
   width: 100%;
 }
+#modal-container .modal.delete-confirmation, #modal-container .modal.mark-confirmation {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+#modal-container .modal.delete-confirmation .message, #modal-container .modal.mark-confirmation .message {
+  font-weight: 400;
+  font-size: 20px;
+  color: #4B5563;
+  line-height: 28px;
+}
+#modal-container .modal.delete-confirmation form, #modal-container .modal.mark-confirmation form {
+  margin-left: auto;
+  display: flex;
+  gap: 8px;
+}
 
 @keyframes slide-down {
   0% {
@@ -747,7 +768,7 @@ main::-webkit-scrollbar-thumb:hover {
   color: #4B5563;
   line-height: 22px;
 }
-.input-group input[type=text] {
+.input-group input[type=text], .input-group input[type=number] {
   padding: 8px 16px;
   border-radius: 4px;
   font-weight: 400;
@@ -757,7 +778,7 @@ main::-webkit-scrollbar-thumb:hover {
   border: 1px solid transparent;
   cursor: text;
 }
-.input-group input[type=text]:focus {
+.input-group input[type=text]:focus, .input-group input[type=number]:focus {
   border: 1px solid #6366F1;
 }
 

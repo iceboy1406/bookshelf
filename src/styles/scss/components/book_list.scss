@@ -1,15 +1,15 @@
 @use '../color.scss';
 @use '../typography.scss';
-.book-list {
-  display: grid;
-  grid-template-columns: repeat(1, minmax(0, 1fr));
+#book-list {
+  column-count: 1;
+  list-style-type: none;
   gap: 16px;
   @media screen and (min-width: 768px) {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+    column-count: 2;
   }
   &.no-book {
-    grid-template-columns: repeat(1, minmax(0, 1fr));
-    place-content: center;
+    display: grid;
+    place-items: center;
     height: 100%;
     .message {
       text-align: center;
@@ -18,14 +18,17 @@
         color: darken(color.$gray-700, 10%);
       }
     }
-  }
+  } 
   .book-list-item {
     background-color: color.$white;
     border-radius: 4px;
     padding: 24px;
-    display: flex;
+    display: inline-flex;
     flex-direction: column;
     gap: 16px;
+    height: fit-content;
+    width: 100%;
+    margin-bottom: 16px;
     .info {
       display: flex;
       flex-direction: column;
