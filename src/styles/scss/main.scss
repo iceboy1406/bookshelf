@@ -1,19 +1,16 @@
 @use 'color';
-@font-face {
-  font-family: 'Nunito';
-  src: url('../../fonts/Nunito-Light.ttf');
-  font-weight: 300;
-}
-@font-face {
-  font-family: 'Nunito';
-  src: url('../../fonts/Nunito-Regular.ttf');
-  font-weight: 400;
-}
-@font-face {
-  font-family: 'Nunito';
-  src: url('../../fonts/Nunito-SemiBold.ttf');
-  font-weight: 600;
-}
+@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;600&display=swap');
+// Local font - uncomment if you want to use
+// @font-face {
+//   font-family: 'Nunito';
+//   src: url('../../fonts/Nunito-Regular.ttf');
+//   font-weight: 400;
+// }
+// @font-face {
+//   font-family: 'Nunito';
+//   src: url('../../fonts/Nunito-SemiBold.ttf');
+//   font-weight: 600;
+// }
 * {
   scroll-behavior: smooth;
   box-sizing: border-box;
