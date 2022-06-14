@@ -539,6 +539,7 @@ main::-webkit-scrollbar-thumb:hover {
   cursor: text;
   font-size: 14px;
   flex-grow: 1;
+  background-color: transparent;
 }
 @media screen and (min-width: 500px) {
   .search-input-container input {
