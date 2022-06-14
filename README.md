@@ -15,17 +15,20 @@ Because this is use ES Module so this can't be simply run by open html file dire
 
 For easiest way you can follow instruction below.
 
-Clone
-> git clone https://github.com/iceboy1406/bookshelf
+```bash
+#Clone
+$ git clone https://github.com/iceboy1406/bookshelf
 
-Install required packages
-> npm install
+#Install required packages
+$ npm install
 
-Run project
-> npm run start
+#Run project
+$ npm run start
 
-Or run project and watch Typescript and SCSS 
-> npm run dev 
+#Or run project and watch Typescript and SCSS files
+$ npm run dev 
+
+```
 
 ## Author
 This website created by [Eko Susilo](https://github.com/iceboy1406)
